@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta nome="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 6</title>
+</head>
+<body>
+    
+    <script>
+
+        const tarefas = [];
+
+        const AdicionarTarefa = function(NomeTarefa) {
+            if (NomeTarefa) {
+                tarefas.push({
+                    nome: NomeTarefa,
+                    completado: false
+                });
+                console.log(`Tarefa "${NomeTarefa}" adicionada.`);
+            } else {
+                console.log("Nome da tarefa não pode ser vazio.");
+            }
+        };
+
+        const ListaTarefa = () => {
+            console.log("\n--- Lista de Tarefas ---");
+            if (tarefas.length === 0) {
+                console.log("Nenhuma tarefa para exibir.");
+                return;
+            }
+            tarefas.forEach((tarefa, index) => {
+                const status = tarefa.completado ? "[CONCLUÍDA]" : "[PENDENTE]";
+                console.log(`${index + 1}. ${tarefa.nome} ${status}`);
+            });
+            console.log("------------------------");
+        };
+
+        const manuseio = (retorno, index, novoValor) => {
+            if (typeof retorno === 'function') {
+                retorno(index, novoValor);
+            } else {
+                console.log("Erro: O retorno fornecido não é uma função.");
+            }
+        };
+
+        const removerRetorno = (index) => {
+            if (index >= 0 && index < tarefas.length) {
+                const TarefaRemovida = tarefas.splice(index, 1);
+                console.log(`Tarefa "${TarefaRemovida[0].nome}" removida.`);
+            } else {
+                console.log("Índice de tarefa inválido para remoção.");
+            }
+        };
+
+        const AtualizarRetornoTarefa = (index, nomeNovo) => {
+            if (index >= 0 && index < tarefas.length && nomeNovo) {
+                const nomeVelho = tarefas[index].nome;
+                tarefas[index].nome = nomeNovo;
+                console.log(`Tarefa "${nomeVelho}" atualizada para "${nomeNovo}".`);
+            } else {
+                console.log("Índice de tarefa ou novo nome inválido para atualização.");
+            }
+        };
+
+        const completarRetornoTarefa = (index) => {
+            if (index >= 0 && index < tarefas.length) {
+                if (!tarefas[index].completado) {
+                    tarefas[index].completado = true;
+                    console.log(`Tarefa "${tarefas[index].nome}" marcada como concluída.`);
+                } else {
+                    console.log(`Tarefa "${tarefas[index].nome}" já está concluída.`);
+                }
+            } else {
+                console.log("Índice de tarefa inválido para conclusão.");
+            }
+        };
+
+        console.log("--- Demonstração do Gerenciador de Tarefas ---");
+
+        AdicionarTarefa("Comprar pão");
+        AdicionarTarefa("Estudar JavaScript");
+        AdicionarTarefa("Passear com o cachorro");
+
+        ListaTarefa();
+
+    </script>
+
+</body>
+</html>

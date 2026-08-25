@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 4</title>
+</head>
+<body>
+    
+    <script>
+
+        let listaDeCompras = [];
+
+        function adicionarItem() {
+            const item = prompt("Qual item você deseja adicionar à lista?");
+            if (item) {
+                listaDeCompras.push(item);
+                console.log(`"${item}" foi adicionado à lista.`);
+            } else {
+                console.log("Nenhum item foi inserido.");
+            }
+            exibirMenu();
+        }
+
+        function removerItem() {
+            if (listaDeCompras.length === 0) {
+                console.log("A lista de compras está vazia. Nada para remover.");
+                exibirMenu();
+                return;
+            }
+      
+            exibirLista();
+                const indiceParaRemover = prompt("Digite o NÚMERO do item que você deseja remover:");
+                const indice = parseInt(indiceParaRemover);
+      
+            if (!isNaN(indice) && indice >= 0 && indice < listaDeCompras.length) {
+                const itemRemovido = listaDeCompras.splice(indice, 1);
+                console.log(`"${itemRemovido[0]}" foi removido da lista.`);
+            } else {
+                console.log("Índice inválido. Por favor, digite um número válido da lista.");
+            }
+            exibirMenu();
+        }
+
+        function atualizarItem() {
+            if (listaDeCompras.length === 0) {
+                console.log("A lista de compras está vazia. Nada para atualizar.");
+                exibirMenu();
+                return;
+            }
+      
+            exibirLista();
+            const indiceParaAtualizar = prompt("Digite o NÚMERO do item que você deseja atualizar:");
+            const indice = parseInt(indiceParaAtualizar);
+      
+            if (!isNaN(indice) && indice >= 0 && indice < listaDeCompras.length) {
+                const novoItem = prompt(`Digite o novo valor para "${listaDeCompras[indice]}":`);
+                if (novoItem) {
+                    const itemAntigo = listaDeCompras[indice];
+                    listaDeCompras[indice] = novoItem;
+                    console.log(`"${itemAntigo}" foi atualizado para "${novoItem}".`);
+                } else {
+                    console.log("Nenhum novo valor foi inserido.");
+                }
+            } else {
+                console.log("Índice inválido. Por favor, digite um número válido da lista.");
+            }
+            exibirMenu();
+        }
+
+        function exibirLista() {
+            if (listaDeCompras.length === 0) {
+                console.log("\nSua lista de compras está vazia!");
+                return;
+            }
+            console.log("\n--- Sua Lista de Compras ---");
+            let i = 0;
+            for (const item of listaDeCompras) {
+                console.log(`${i}: ${item}`);
+                i++;
+            }
+            console.log("---------------------------");
+        }
+
+        function exibirMenu() {
+            const opcao = prompt(
+                `Selecione uma opção:
+                1. Adicionar item
+                2. Remover item
+                3. Atualizar item
+                4. Exibir lista
+                5. Sair`
+            );
+        
+            switch (opcao) {
+                case '1':
+                adicionarItem();
+                break;
+                case '2':
+                removerItem();
+                break;
+                case '3':
+                atualizarItem();
+                break;
+                case '4':
+                exibirLista();
+                exibirMenu(); 
+                break;
+                case '5':
+                console.log("Saindo do programa. Boas compras!");
+                break;
+                default:
+                console.log("Opção inválida. Por favor, escolha um número de 1 a 5.");
+                exibirMenu();
+                break;
+            }
+        }
+
+        exibirMenu();
+
+    </script>
+
+</body>
+</html>

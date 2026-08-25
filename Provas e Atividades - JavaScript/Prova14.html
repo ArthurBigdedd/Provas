@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 50px;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        #fetchDataBtn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
+
+        #fetchDataBtn:hover {
+            background-color: #0056b3;
+        }
+
+        .results-area {
+            border-top: 2px solid #eee;
+            padding-top: 20px;
+        }
+
+        .user-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+
+        .user-card h3 {
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+
+        .user-card p {
+            margin: 2px 0;
+            font-size: 0.9em;
+        }
+
+        .message {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+
+        .error {
+            color: #dc3545; /* Vermelho para erros */
+            font-weight: bold;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Consumo de API - JSONPlaceholder Users</h1>
+
+        <button id="fetchDataBtn">
+            Buscar Usuários
+        </button>
+
+        <div id="resultsArea" class="results-area">
+            <p class="message">Pressione o botão para buscar os dados dos usuários da API.</p>
+        </div>
+    </div>
+
+    <script>
+
+        const API_URL = 'https://jsonplaceholder.typicode.com/users'; 
+        const DADOS_CIDADES_SIMULADOS = [
+            { id: 1, nome: "Salvador", estado: "Bahia", populacao: "2.900.000", capital: true },
+            { id: 2, nome: "Rio de Janeiro", estado: "Rio de Janeiro", populacao: "6.700.000", capital: true },
+            { id: 3, nome: "São Paulo", estado: "São Paulo", populacao: "12.300.000", capital: true },
+            { id: 4, nome: "Curitiba", estado: "Paraná", populacao: "1.960.000", capital: true },
+            { id: 5, nome: "Florianópolis", estado: "Santa Catarina", populacao: "510.000", capital: true },
+            { id: 6, nome: "Manaus", estado: "Amazonas", populacao: "2.250.000", capital: true }
+        ];
+            
+        const botaoBuscarDados = document.getElementById('fetchDataBtn');
+        const areaResultados = document.getElementById('resultsArea');
+            
+        function exibirMensagem(mensagem, ehErro = false) {
+            areaResultados.innerHTML = ''; 
+        
+            const p = document.createElement('p');
+            p.textContent = mensagem;
+            p.className = ehErro ? 'error' : 'message';
+            areaResultados.appendChild(p);
+        }
+        
+        async function buscarDadosCidades() {
+            areaResultados.innerHTML = '';
+            exibirMensagem("Buscando dados das cidades...", false);
+            
+            botaoBuscarDados.disabled = true;
+        
+            await new Promise(resolve => setTimeout(resolve, 1500));
+        
+            try {
+                const erroSimulado = Math.random() < 0.2; 
+                if (erroSimulado) {
+                    throw new Error("Falha na conexão com a API de Cidades (erro simulado 503).");
+                }
+            
+                const dadosCidades = DADOS_CIDADES_SIMULADOS;
+            
+                exibirCidades(dadosCidades);
+            
+            } catch (erro) {
+                console.error("Erro na busca de dados:", erro);
+                
+                exibirMensagem(`Erro ao buscar as cidades. Detalhes: ${erro.message}. Tente novamente.`, true);
+            
+            } finally {
+                botaoBuscarDados.disabled = false;
+            }
+        }
+        
+        function exibirCidades(cidades) {
+            areaResultados.innerHTML = ''; 
+        
+            if (cidades.length === 0) {
+                exibirMensagem("Nenhuma cidade encontrada.", false);
+                return;
+            }
+        
+            const fragmento = document.createDocumentFragment();
+        
+            cidades.forEach(cidade => {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'user-card';
+            
+                const nomeTitulo = document.createElement('h3');
+                nomeTitulo.textContent = cidade.nome;
+                
+                const estadoParagrafo = document.createElement('p');
+                estadoParagrafo.innerHTML = `<strong>Estado:</strong> ${cidade.estado}`;
+            
+                const populacaoParagrafo = document.createElement('p');
+                populacaoParagrafo.innerHTML = `<strong>População:</strong> ${cidade.populacao} (estimativa)`;
+                
+                const capitalParagrafo = document.createElement('p');
+                const statusCapital = cidade.capital ? 'Sim' : 'Não';
+                capitalParagrafo.innerHTML = `<strong>É Capital:</strong> ${statusCapital}`;
+            
+                cardDiv.appendChild(nomeTitulo);
+                cardDiv.appendChild(estadoParagrafo);
+                cardDiv.appendChild(populacaoParagrafo);
+                cardDiv.appendChild(capitalParagrafo);
+                
+                fragmento.appendChild(cardDiv);
+            });
+        
+            areaResultados.appendChild(fragmento);
+        }
+        
+        botaoBuscarDados.addEventListener('click', buscarDadosCidades);
+
+    </script>
+
+</body>
+</html>

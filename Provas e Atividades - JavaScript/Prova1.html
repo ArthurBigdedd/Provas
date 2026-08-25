@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 1</title>
+</head>
+<body>
+    
+    <script>
+        
+        let numero1 = parseFloat(prompt("Digite o primeiro número:"));
+        let numero2 = parseFloat(prompt("Digite o segundo número:"));
+        let resultado = 0;
+
+        resultado = numero1 + numero2;
+        console.log(`Adição: ${numero1} + ${numero2} = ${resultado}`);
+
+        resultado -= numero1; 
+        resultado = numero1 - numero2;
+        console.log(`Subtração: ${numero1} - ${numero2} = ${resultado}`);
+
+        resultado = 1; 
+        resultado *= (numero1 * numero2);
+        console.log(`Multiplicação: ${numero1} * ${numero2} = ${numero1 * numero2}`);
+
+        if (numero2 !== 0) {
+            resultado = numero1 / numero2;
+            console.log(`Divisão: ${numero1} / ${numero2} = ${resultado}`);
+        } 
+
+        else {
+            console.log("Divisão por zero não é permitida.");
+        }
+
+
+    </script>
+
+</body>
+</html>

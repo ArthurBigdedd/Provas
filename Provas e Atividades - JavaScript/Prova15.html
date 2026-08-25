@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        #loadUsersBtn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        #loadUsersBtn:hover {
+            background-color: #0056b3;
+        }
+        
+        #usersList {
+            list-style: none;
+            padding: 0;
+        }
+        
+        #usersList li {
+            background: #e9ecef;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 5px solid #007bff;
+        }
+        
+        .error-message {
+            color: #d9534f; /* Vermelho para destaque de erro */
+            font-weight: bold;
+            background-color: #f2dede;
+            border: 1px solid #ebccd1;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 15px;
+            display: none; /* Inicialmente oculto */
+        }
+
+    </style>
+
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Lista de Usuários da API</h1>
+        
+        <button id="loadUsersBtn">Carregar Usuários</button>
+        
+        <p id="errorMessage" class="error-message"></p>
+        
+        <h2>Usuários Cadastrados:</h2>
+        <ul id="usersList">
+            </ul>
+    </div>
+
+    <script>
+
+        const botaoCarregarUsuarios = document.getElementById('loadUsersBtn');
+        const listaUsuarios = document.getElementById('usersList');
+        const elementoMensagemErro = document.getElementById('errorMessage');
+            
+        const URL_API = 'https://jsonplaceholder.typicode.com/users';
+            
+        function exibirErro(mensagem) {
+            elementoMensagemErro.textContent = mensagem;
+            elementoMensagemErro.style.display = 'block';
+            listaUsuarios.innerHTML = '';
+        }
+        
+        function limparErro() {
+            elementoMensagemErro.textContent = '';
+            elementoMensagemErro.style.display = 'none';
+        }
+        
+        function exibirUsuarios(usuarios) {
+            listaUsuarios.innerHTML = '';
+        
+            usuarios.forEach(usuario => {
+                const itemLista = document.createElement('li');
+                
+                itemLista.innerHTML = `
+                    <strong>Nome:</strong> ${usuario.name}<br>
+                    <strong>Email:</strong> ${usuario.email}
+                `;
+                
+                listaUsuarios.appendChild(itemLista);
+            });
+        }
+        
+        async function carregarUsuarios() {
+            limparErro();
+        
+            try {
+                const resposta = await fetch(URL_API);
+            
+                if (!resposta.ok) {
+                    throw new Error(`Erro de rede: Status ${resposta.status}`);
+                }
+            
+                const dados = await resposta.json();
+            
+                exibirUsuarios(dados);
+            
+            } catch (erro) {
+                console.error('Detalhe do Erro:', erro);
+                exibirErro("Erro ao carregar os usuários, tente novamente mais tarde.");
+            }
+        }
+        
+        botaoCarregarUsuarios.addEventListener('click', carregarUsuarios);
+
+    </script>
+
+</body>
+</html>

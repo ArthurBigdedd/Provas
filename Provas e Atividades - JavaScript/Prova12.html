@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 12</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 50px;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #noteTitle {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        #addNoteBtn {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        #addNoteBtn:hover {
+            background-color: #0056b3;
+        }
+
+        #notesList {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .note-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .note-item span {
+            word-break: break-word;
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .remove-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+        }
+
+        .remove-btn:hover {
+            background-color: #c82333;
+        }
+
+    </style>
+
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Gerenciador de Notas Simples</h1>
+
+        <div class="input-area">
+            <input type="text" id="noteTitle" placeholder="Digite o título da nota...">
+            <button id="addNoteBtn">Adicionar Nota</button>
+        </div>
+
+        <ul id="notesList">
+            </ul>
+    </div>
+
+    <script>
+
+        const noteTitleInput = document.getElementById('noteTitle');
+        const addNoteBtn = document.getElementById('addNoteBtn');
+        const notesList = document.getElementById('notesList');
+
+        const STORAGE_KEY = 'notes';
+
+        const getNotes = () => {
+            const notesString = localStorage.getItem(STORAGE_KEY);
+            return notesString ? JSON.parse(notesString) : [];
+        };
+
+        const saveNotes = (notes) => {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+        };
+
+        const renderNotes = () => {
+            notesList.innerHTML = '';
+            const notes = getNotes();
+
+            notes.forEach(note => {
+                const noteItem = document.createElement('li');
+                noteItem.classList.add('note-item');
+
+                const noteTitle = document.createElement('span');
+                noteTitle.textContent = note.title;
+
+                const removeBtn = document.createElement('button');
+                removeBtn.classList.add('remove-btn');
+                removeBtn.textContent = 'Remover';
+
+                removeBtn.addEventListener('click', () => {
+                    removeNote(note.id);
+                });
+
+                noteItem.appendChild(noteTitle);
+                noteItem.appendChild(removeBtn);
+
+                notesList.appendChild(noteItem);
+            });
+        };
+
+        const addNote = () => {
+            const noteTitle = noteTitleInput.value.trim();
+
+            if (noteTitle === '') {
+                alert('O título da nota não pode ser vazio!');
+                return;
+            }
+
+            const notes = getNotes();
+
+            const newNote = {
+                id: Date.now(), 
+                title: noteTitle
+            };
+
+            notes.push(newNote);
+
+            saveNotes(notes);
+
+            noteTitleInput.value = '';
+
+            renderNotes();
+        };
+
+        const removeNote = (noteId) => {
+
+            let notes = getNotes();
+
+            notes = notes.filter(note => note.id !== noteId);
+
+            saveNotes(notes);
+
+            renderNotes();
+        };
+
+        addNoteBtn.addEventListener('click', addNote);
+
+        noteTitleInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                addNote();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', renderNotes);
+
+    </script>
+
+</body>
+</html>

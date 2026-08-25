@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 3</title>
+</head>
+<body>
+
+    <script>
+        
+        const nomes = [];
+
+        while (true) {
+            const entrada = prompt( "Digite um nome (ou 'sair' para finalizar):" );
+
+            if (entrada === null || entrada.toLowerCase() === 'sair') {
+                break; 
+            }
+
+            if (entrada.trim() !== '') { 
+                nomes.push(entrada.trim());
+            }
+        }
+
+        if (nomes.length === 0) {
+            console.log( "Nenhum nome foi inserido." );
+        } else {
+
+            console.log(" Nomes com Índices (usando for) ");
+            for (let i = 0; i < nomes.length; i++) {
+                console.log( `${i + 1}: ${nomes[i]}` );
+            }
+
+            console.log( "Mensagens Personalizadas (usando for...of)" );
+            for (const nome of nomes) {
+                console.log( `Bem-vindo(a), ${nome}!` );
+            }
+        }
+
+    </script>
+</body>
+</html>

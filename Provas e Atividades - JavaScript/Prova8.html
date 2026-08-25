@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 8</title>
+</head>
+<body>
+    
+    <script>
+
+        // Um objeto literal é definido por uma lista de pares de propriedade e métodos, todos encapsulados em {}.
+        // As propriedades que contem 'variáveis internas' que armazenam os dados.
+        // Os métodos são funções que realizam ações relacionadas ao objeto.
+
+        const aluno = {
+            // Propriedades:
+            nome: 'Arthur', 
+            notas: [8, 9, 7.5, 10], 
+
+            // Método:
+            calcularMedia: function() { 
+                const soma = this.notas.reduce((total, nota) => total + nota, 0);
+                return soma / this.notas.length;
+            } 
+        };
+
+        console.log(aluno.nome);
+        console.log(aluno.notas);
+        console.log(aluno.calcularMedia());
+
+        // Desestruturação para extrair a propriedade 'nome'
+        const { nome } = aluno;
+        console.log(nome); 
+
+        // Spread operator para criar um novo array de notas atualizadas
+        const notasAtualizadas = [...aluno.notas, 9.5];
+        console.log(notasAtualizadas); 
+
+        // O objeto original permanece inalterado
+        console.log(aluno.notas); 
+
+    </script>
+
+</body>
+</html>

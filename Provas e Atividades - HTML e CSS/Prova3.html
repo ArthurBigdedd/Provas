@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 3</title>
+
+    <style>
+        *{
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    
+    <main>
+            
+        <form action="submit"> <!--Seções-->
+              
+            <!--Nome-->
+            <label for="">Digite seu nome: 
+                <input type="text" id="" placeholder="Ex.:Carlos"/>
+            </label>
+
+            <br />
+
+            <!--Email-->
+            <label for="Email">Digite seu email:</label>
+            <input type="email" id="email" placeholder="exemplo@email.com">
+
+            <br />
+
+            <!--Senha-->
+            <label for="senha">Digite sua senha:</label>
+            <input id="senha" type="password" />
+
+            <br />
+
+            <!--Seleção-->
+            <div> Selecione o seu respectivo país:
+                <select name="paises" id="paises">
+                    <option value="brasil">Brasil</option>
+                    <option value="russia">Rússia</option>
+                    <option value="estados unidos">Estados Unidos</option>
+                    <option value="china">China</option>
+                    <option value="japao">Japão</option>
+                    <option value="inglaterra">Inglaterra</option>
+                    <option value="africa do sul">África do Sul</option>
+                    <option value="argentina">Argentina</option>
+                    <option value="portugal">Portugal</option>
+                </select>
+            </div>
+
+            <br />
+
+            <!--Campo de Mensagens-->
+            <label for="curriculo">Digite resumo do currículo:</label>
+            <textarea name="curriculo" id="curriculo" cols="50" rows="3"></textarea>
+
+            <br />
+
+            <!--Botões-->
+            <button type="submit">Enviar Dados</button>
+            <button type="reset">Limpar Dados</button>
+
+    </main>
+    
+</body>
+</html>

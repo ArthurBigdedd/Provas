@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 7</title>
+
+    <style>
+        :root {
+            --TamanhoDaFonteH1: 2em;
+            --TamanhoDaFonteH2: 1.5em;
+            --EspaçamentoPequeno: 0.5em;
+            --EspaçamentoMedio: 1em;
+        }
+
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            
+        }
+
+        h1 {
+            font-size: var(--TamanhoDaFonteH1);
+            margin-bottom: var(--EspaçamentoMedio);
+        }
+
+        h2 {
+            font-size: var(--TamanhoDaFonteH2);
+            margin-bottom: var(--EspaçamentoPequeno);
+        }
+
+        .container {
+            margin-bottom: var(--EspaçamentoMedio);
+            padding: 15px;
+            border: 1px solid;
+            background-color: #dddddd;
+        }
+
+        @media (min-width: 768px) {
+            :root {
+                --TamanhoDaFonteH1: 2.5em;
+                --TamanhoDaFonteH2: 1.8em;
+                --EspaçamentoPequeno: 0.8em;
+                --EspaçamentoMedio: 1.5em;
+            }
+
+            body {
+                margin: 30px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            :root {
+                --TamanhoDaFonteH1: 3em;
+                --TamanhoDaFonteH2: 2em;
+                --EspaçamentoPequeno: 1em;
+                --EspaçamentoMedio: 2em;
+            }
+
+            body {
+                margin: 50px auto;
+                max-width: 960px;
+            }
+
+            .container {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+  <h1>Título</h1>
+    <div class="container">
+        <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora excepturi nisi cupiditate earum omnis deserunt architecto mollitia quia repellat? Expedita quam tenetur animi reprehenderit doloribus itaque natus sunt quas eos?</h2>
+    </div>
+    <div class="container">
+        <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem iste explicabo veritatis magni accusantium tempore sit a dignissimos molestias suscipit nihil ut dolor commodi expedita maiores quibusdam, eum modi adipisci!</h2>
+    </div>
+
+</body>
+</html>

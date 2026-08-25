@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 7</title>
+</head>
+<body>
+    
+    <script>
+        let nomes = [];
+
+        function adicionarNome() {
+            const nome = prompt("Digite o nome a ser adicionado: (DIGITE SEM NENHUM TIPO DE ACENTUAÇÃO)");
+            if (nome) {
+                nomes.push(nome);
+                console.log(nome);
+            }
+        }
+
+        function filtrarNomes() {
+            if (nomes.length === 0) {
+                alert("A lista está vazia. Adicione nomes primeiro.");
+                return;
+            }
+            const letra = prompt("Digite a letra inicial para filtrar:");
+            const nomesFiltrados = nomes.filter(nome => nome.startsWith(letra));
+            if (nomesFiltrados.length > 0) {
+                console.log(`Nomes que começam com "${letra}": ${nomesFiltrados.join(', ')}`);
+            } else {
+                console.log(`Nenhum nome encontrado que comece com "${letra}".`);
+            }
+        }
+
+        function buscarNome() {
+            if (nomes.length === 0) {
+                alert("A lista está vazia. Adicione nomes primeiro.");
+                return;
+            }
+            const nomeBuscado = prompt("Digite o nome exato para buscar:");
+            const nomeEncontrado = nomes.find(nome => nome === nomeBuscado);
+            if (nomeEncontrado) {
+                alert(`Nome encontrado: ${nomeEncontrado}`);
+            } else {
+                alert(`O nome "${nomeBuscado}" não foi encontrado.`);
+            }
+        }
+
+        function transformarNomes() {
+            if (nomes.length === 0) {
+                alert("A lista está vazia. Adicione nomes primeiro.");
+                return;
+            }
+            const nomesMaiusculos = nomes.map(nome => nome.toUpperCase());
+            console.log(`Nomes em letras maiúsculas: ${nomesMaiusculos.join(', ')}`);
+        }
+
+        function verificarCondicao() {
+            if (nomes.length === 0) {
+                alert("A lista está vazia. Adicione nomes primeiro.");
+                return;
+            }
+            const todosMaioresQueTres = nomes.every(nome => nome.length > 3);
+            console.log(`Todos os nomes têm mais de 3 caracteres? ${todosMaioresQueTres}`);
+        }
+
+        function menu() {
+            let continuar = true;
+            while (continuar) {
+                const opcao = prompt(
+                "--- Gerenciador de Nomes ---\n" +
+                "1. Adicionar um novo nome\n" +
+                "2. Filtrar nomes por letra inicial\n" +
+                "3. Buscar um nome específico\n" +
+                "4. Transformar nomes para maiúsculas\n" +
+                "5. Verificar se todos os nomes têm mais de 3 caracteres\n" +
+                "6. Sair\n" +
+                "\nEscolha uma opção:"
+            );
+        
+            switch (opcao) {
+                case '1':
+                adicionarNome();
+                break;
+                case '2':
+                filtrarNomes();
+                break;
+                case '3':
+                buscarNome();
+                break;
+                case '4':
+                transformarNomes();
+                break;
+                case '5':
+                verificarCondicao();
+                break;
+                case '6':
+                alert("Saindo do programa. Até mais!");
+                continuar = false;
+                break;
+                default:
+                if (opcao !== null) {
+                alert("Opção inválida. Por favor, escolha um número de 1 a 6.");
+                } else {
+                continuar = false; 
+                }
+                break;
+            }
+          }
+        }
+
+        menu();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto Final</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #tarefa-forma {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #tarefa-Input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #tarefa-forma button {
+            padding: 10px 15px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #tarefa-forma button:hover {
+            background-color: #4cae4c;
+        }
+
+        #tarefa-Lista {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .task-item.completed {
+            background-color: #e0f2e0;
+        }
+
+        .task-item .task-title {
+            flex-grow: 1;
+            cursor: pointer;
+        }
+
+        .task-item.completed .task-title {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .task-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-left: 5px;
+            color: #777;
+        }
+
+        .task-actions .remove-btn:hover {
+            color: #d9534f;
+        }
+
+        .task-actions .complete-btn {
+            color: #5bc0de;
+        }
+
+        .task-actions .complete-btn:hover {
+            color: #31b0d5;
+        }
+
+    </style>
+
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Lista de Tarefas</h1>
+
+        <form id="tarefa-forma">
+            <input type="text" id="tarefa-Input" placeholder="Nova tarefa..." required>
+            <button type="submit">Adicionar</button>
+        </form>
+
+        <ul id="tarefa-Lista"></ul>
+    </div>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+        const tarefaForma = document.getElementById('tarefa-forma');
+        const tarefaInput = document.getElementById('tarefa-Input');
+        const tarefaLista = document.getElementById('tarefa-Lista');
+                
+        const tarefaSalvar = (tarefas) => {
+            localStorage.setItem('tarefas', JSON.stringify(tarefas));
+        };
+        
+        const pegarTarefas = () => {
+            const tarefas = localStorage.getItem('tarefas');
+            return tarefas ? JSON.parse(tarefas) : [];
+        };
+        
+        const rendertarefas = () => {
+            const tarefas = pegarTarefas();
+            tarefaLista.innerHTML = ''; 
+            
+            tarefas.forEach((task, index) => {
+                const li = document.createElement('li');
+                li.className = `task-item ${task.completed ? 'completed' : ''}`;
+
+                li.innerHTML = `
+                    <span class="task-title">${task.title}</span>
+                    <div class="task-actions">
+                        <button class="complete-btn" data-index="${index}">
+                            ${task.completed ? 'Desmarcar' : 'Concluir'}
+                        </button>
+                        <button class="remove-btn" data-index="${index}">Remover</button>
+                    </div>
+                `;
+                tarefaLista.appendChild(li);
+            });
+        };
+        
+        tarefaForma.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const novoTitulo = tarefaInput.value.trim();
+            
+            if (novoTitulo) {
+                const tarefas = pegarTarefas();
+                const novaTarefa = {
+                    title: novoTitulo,
+                    completed: false
+                };
+                tarefas.push(novaTarefa);
+                tarefaSalvar(tarefas);
+                tarefaInput.value = '';
+                rendertarefas();
+            }
+        });
+        
+        tarefaLista.addEventListener('click', (e) => {
+            const target = e.target;
+            const tarefas = pegarTarefas();
+            
+            if (target.classList.contains('complete-btn')) {
+                const index = target.dataset.index;
+                tarefas[index].completed = !tarefas[index].completed;
+                tarefaSalvar(tarefas);
+                rendertarefas();
+                
+            } else if (target.classList.contains('remove-btn')) {
+                const index = target.dataset.index;
+                tarefas.splice(index, 1);
+                tarefaSalvar(tarefas);
+                rendertarefas();
+            }
+        });
+        
+        rendertarefas();
+    });
+
+    </script>
+
+</body>
+</html>

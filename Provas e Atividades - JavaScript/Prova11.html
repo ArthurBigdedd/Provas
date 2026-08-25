@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 11</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding-top: 50px;
+        }
+
+        main {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px black;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .botoes-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            flex-grow: 1;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #limparLista {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        #limparLista:hover {
+            background-color: #c82333;
+        }
+
+        #listaResultados {
+            margin-top: 40px;
+        }
+
+        #lista {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        #lista li {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 2px black
+        }
+
+        .erro {
+            border: 2px solid red;
+        }
+    </style>
+
+</head>
+<body>
+    
+    <main>
+        <h1>Cadastro de Usuário</h1>
+        <form id="cadastroForm">
+            <div class="form-group">
+                <label for="nome">Nome de Usuário:</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required>
+            </div>
+
+            <div class="form-group">
+                <label for="telefone">Telefone:</label>
+                <input type="tel" id="telefone" name="telefone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="dataNascimento">Data de Nascimento:</label>
+                <input type="date" id="dataNascimento" name="dataNascimento" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="botoes-container">
+                <button type="submit">Enviar</button>
+                <button type="button" id="limparLista">Limpar Lista</button>
+            </div>
+        </form>
+
+        <section id="listaResultados">
+            <h2>Dados Enviados</h2>
+            <ul id="lista"></ul>
+        </section>
+    </main>
+
+
+    <script>
+
+        const formulario = document.getElementById('cadastroForm');
+        const lista = document.getElementById('lista');
+        const limparListaBtn = document.getElementById('limparLista');
+
+        formulario.addEventListener('submit', function(evento) {
+            evento.preventDefault();
+
+            const nome = document.getElementById('nome').value;
+            const senha = document.getElementById('senha').value;
+            const telefone = document.getElementById('telefone').value;
+            const dataNascimento = document.getElementById('dataNascimento').value;
+            const email = document.getElementById('email').value;
+
+            if (nome === '' || senha === '' || telefone === '' || dataNascimento === '' || email === '') {
+                console.error('Erro: Por favor, preencha todos os campos!');
+                alert('Por favor, preencha todos os campos para continuar.');
+
+            } else {
+
+                const novoItem = document.createElement('li');
+
+                novoItem.innerHTML = `
+                    <strong>Nome:</strong> ${nome} <br>
+                    <strong>Senha:</strong> ${senha} <br>
+                    <strong>Telefone:</strong> ${telefone} <br>
+                    <strong>Data de Nascimento:</strong> ${dataNascimento} <br>
+                    <strong>E-mail:</strong> ${email}
+                `;
+
+                lista.appendChild(novoItem);
+
+                formulario.reset();
+                
+                console.log('Dados enviados com sucesso!');
+            }
+        });
+
+        limparListaBtn.addEventListener('click', function() {
+            lista.innerHTML = '';
+            console.log('Lista limpa.');
+        });
+
+    </script>
+
+</body>
+</html>

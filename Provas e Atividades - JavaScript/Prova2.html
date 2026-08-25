@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 2</title>
+</head>
+<body>
+    
+    <script>
+        
+        const Idade = parseInt ( prompt ( "Digite sua idade:" ) );
+        const Registro = prompt(`Você é "REGISTRADO" ou "NÃO REGISTRADO"? (Digite corretamente) `).toLowerCase();
+        
+        const mensagemIdade = ( Idade >= 18 ) ? "Você é maior de idade." : "Você é menor de idade.";
+        alert( mensagemIdade );
+
+        let mensagemStatus;
+        switch ( Registro ) {
+            case "registrado":
+                mensagemStatus = "Bem-vindo(a) de volta! Agradecemos por ser um usuário registrado.";
+                break;
+            case "não registrado":
+                mensagemStatus = "Por favor, complete seu registro para ter acesso total aos nossos recursos.";
+                break;
+            default:
+                mensagemStatus = "Status desconhecido. Por favor, verifique sua entrada.";
+        }
+        alert(mensagemStatus);
+      
+        if ( Idade >= 18 && Registro === "registrado" ) {
+            alert ( "Acesso completo concedido! Você pode desfrutar de todas as funcionalidades." );
+        } else if ( idade < 18 || Registro === "não registrado" ) {
+            alert( "Acesso limitado. Algumas funcionalidades podem não estar disponíveis." );
+        }
+        
+    </script>
+
+</body>
+</html>

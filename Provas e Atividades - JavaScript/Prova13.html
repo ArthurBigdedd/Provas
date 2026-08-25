@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 13</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+        }
+        
+        .container {
+            background: #fff;
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 0.25em;
+            display: block;
+        }
+
+        .success-message {
+            color: green;
+            text-align: center;
+            margin-top: 1em;
+            font-weight: bold;
+        }
+
+        button {
+            width: 100%;
+            padding: 1em;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Cadastro de Usuário</h1>
+        <form id="cadastroForm">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome">
+                <span id="nomeError" class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="usuario">Usuário:</label>
+                <input type="text" id="usuario" name="usuario">
+                <span id="usuarioError" class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha">
+                <span id="senhaError" class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+                <span id="emailError" class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="dataNascimento">Data de Nascimento:</label>
+                <input type="date" id="dataNascimento" name="dataNascimento">
+                <span id="dataNascimentoError" class="error-message"></span>
+            </div>
+            <button type="submit">Cadastrar</button>
+            <div id="statusMessage" class="success-message"></div>
+        </form>
+    </div>
+
+    <script>
+
+        document.getElementById('cadastroForm').addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+        clearErrors();
+
+        const nome = document.getElementById('nome').value.trim();
+        const usuario = document.getElementById('usuario').value.trim();
+        const senha = document.getElementById('senha').value;
+        const email = document.getElementById('email').value.trim();
+        const dataNascimento = document.getElementById('dataNascimento').value;
+
+        try {
+            validateField('nome', nome, 'O nome deve ser preenchido.');
+            validateField('usuario', usuario, 'O usuário deve ser preenchido.');
+            validateField('senha', senha, 'A senha deve ser preenchida.');
+            validateField('email', email, 'O e-mail deve ser preenchido.');
+            validateField('dataNascimento', dataNascimento, 'A data de nascimento deve ser preenchida.');
+
+            if (!validateEmail(email)) {
+                throw new Error('Email inválido.');
+            }
+
+            if (!validateAge(dataNascimento)) {
+                throw new Error('A idade mínima para cadastro é de 18 anos.');
+            }
+
+            showSuccessMessage('Cadastro realizado com sucesso!');
+
+        } catch (error) {
+            displayError(error.message);
+        }
+    });
+
+    function validateField(fieldName, value, errorMessage) {
+        if (!value) {
+            throw new Error(errorMessage);
+        }
+    }
+
+    function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function validateAge(dateOfBirth) {
+        const today = new Date();
+        const dob = new Date(dateOfBirth);
+        let age = today.getFullYear() - dob.getFullYear();
+        const m = today.getMonth() - dob.getMonth();
+
+        if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+            age--;
+        }
+
+        return age >= 18;
+    }
+
+    function displayError(message) {
+        const fieldId = getFieldIdByMessage(message);
+        const errorElement = document.getElementById(fieldId + 'Error');
+        if (errorElement) {
+            errorElement.textContent = message;
+        }
+    }
+
+    function getFieldIdByMessage(message) {
+        if (message.includes('nome')) return 'nome';
+        if (message.includes('usuário')) return 'usuario';
+        if (message.includes('senha')) return 'senha';
+        if (message.includes('e-mail') || message.includes('Email')) return 'email';
+        if (message.includes('data de nascimento') || message.includes('idade')) return 'dataNascimento';
+        return null; 
+    }
+
+    function clearErrors() {
+        document.querySelectorAll('.error-message').forEach(span => {
+            span.textContent = '';
+        });
+        document.getElementById('statusMessage').textContent = '';
+    }
+    
+    function showSuccessMessage(message) {
+        document.getElementById('statusMessage').textContent = message;
+    }
+
+    </script>
+
+</body>
+</html>

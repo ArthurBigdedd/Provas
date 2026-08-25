@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 4</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #8E5654; 
+        }
+
+        header { /*Cabeçalho*/
+            background-color: #2B2237;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+        }
+
+        nav ul { /*Espaçamento do cabeçalho*/
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav li { /*Margem do texto do cabeçalho*/
+            margin: 0 1em;
+        }
+
+        nav a { /*Cor do texto do cabeçalho*/
+            color: #fff;
+            text-decoration: none;
+        }
+
+        section { /*Quadrado da Esquerda*/
+            background-color: #F0E0A8; 
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+        }
+
+        aside { /*Quadrado da Direita*/
+            background-color: #F0E0A8; 
+            padding: 15px;
+            margin: 20px;
+            border-radius: 5px;
+        }
+
+        footer { /*Rodapé*/
+            background-color: #2B2237;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        button {
+            background-color: #5cb85c;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        .destaque-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .destaque-link:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .container > section,
+        .container > aside {
+            flex: 1 1 300px;
+            margin: 10px;
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <h1>Meu Site</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Serviços</a></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2>Conteúdo:</h2>
+            <p>Esta é a seção principal do meu site.</p>
+            <button>Leia Mais</button>
+        </section>
+
+        <aside>
+            <h3>Links:</h3>
+            <p>Pode conter informações em links úteis.</p>
+            <ul>
+                <li><a href="#" class="destaque-link">Link 1</a></li>
+                <li><a href="#" class="destaque-link">Link 2</a></li>
+                <li><a href="#" class="destaque-link">Link 3</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <footer>
+        <p>Meu Site. Todos os direitos reservados para eu mesmo.</p>
+    </footer>
+</body>
+</html>

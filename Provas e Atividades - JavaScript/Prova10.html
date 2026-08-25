@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 10</title>
+
+    <style>
+    
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #nova-tarefa {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #add-btn {
+            padding: 10px 15px;
+            background-color: #48ff57;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #add-btn:hover {
+            background-color: #2bd42b;
+        }
+
+        #lista-tarefas {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .tarefa-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .tarefa-item.concluida {
+            text-decoration: line-through;
+            color: #888;
+            background-color: #d4edda;
+        }
+
+        .remover-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .remover-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Organizador de Tarefas</h1>
+        <div class="input-area">
+            <input type="text" id="nova-tarefa" placeholder="Digite uma nova tarefa...">
+            <button id="add-btn">Adicionar Tarefa</button>
+        </div>
+        <ul id="lista-tarefas"></ul>
+    </div>
+
+    <script>
+
+        const inputTarefa = document.getElementById('nova-tarefa');
+        const btnAdicionar = document.getElementById('add-btn');
+        const listaTarefas = document.getElementById('lista-tarefas');
+
+        function criarTarefaItem(texto) {
+            const li = document.createElement('li');
+            li.className = 'tarefa-item';
+            
+            const spanTexto = document.createElement('span');
+            spanTexto.textContent = texto;
+            
+            const btnRemover = document.createElement('button');
+            btnRemover.textContent = 'Remover';
+            btnRemover.className = 'remover-btn';
+
+            li.appendChild(spanTexto);
+            li.appendChild(btnRemover);
+            
+            return li;
+        }
+
+        btnAdicionar.addEventListener('click', () => {
+
+            const textoTarefa = inputTarefa.value.trim();
+
+            if (textoTarefa !== '') {
+                const novaTarefa = criarTarefaItem(textoTarefa);
+                listaTarefas.appendChild(novaTarefa);
+                inputTarefa.value = ''; // Limpa o input
+            }
+        });
+
+        listaTarefas.addEventListener('click', (evento) => {
+            const alvo = evento.target;
+            if (alvo.classList.contains('remover-btn')) {
+
+                const itemParaRemover = alvo.parentNode;
+                listaTarefas.removeChild(itemParaRemover);
+            }
+            else if (alvo.tagName === 'SPAN') {
+                alvo.parentNode.classList.toggle('concluida');
+            }
+        });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 5</title>
+</head>
+<body>
+    
+    <script>
+        function gerenciadorDeTarefas() {
+        let tarefas = [];
+        let continuar = true;
+
+        while (continuar) {
+            let acao = prompt(
+                "Escolha uma ação:\n" +
+                "1. Adicionar tarefa\n" +
+                "2. Listar tarefas\n" +
+                "3. Remover tarefa\n" +
+                "4. Concluir tarefa\n" +
+                "5. Sair"
+            );
+
+            switch (acao) {
+                
+                case "1":
+                let novaTarefa = prompt("Digite o nome da tarefa:");
+                if (novaTarefa) {
+                    tarefas.push(novaTarefa);
+                    alert(`"${novaTarefa}" foi adicionada às suas tarefas.`);
+                }
+                break;
+                
+                case "2":
+                if (tarefas.length === 0) {
+                    alert("Nenhuma tarefa para listar.");
+                } else {
+                    let lista = "Suas tarefas:\n";
+                    for (let i = 0; i < tarefas.length; i++) {
+                        lista += `${i + 1}. ${tarefas[i]}\n`;
+                    }
+                    alert(lista);
+                }
+                break;
+                
+                case "3":
+                if (tarefas.length === 0) {
+                    alert("Não há tarefas para remover.");
+                    break;
+                }
+                let indiceRemover = prompt("Digite o NÚMERO da tarefa que deseja remover:");
+                let indexParaRemover = parseInt(indiceRemover) - 1;
+                if (!isNaN(indexParaRemover) && indexParaRemover >= 0 && indexParaRemover < tarefas.length) {
+                    let tarefaRemovida = tarefas.splice(indexParaRemover, 1);
+                    alert(`"${tarefaRemovida}" foi removida.`);
+                } else {
+                    alert("Índice inválido. Por favor, digite um número válido da lista.");
+                }
+                break;
+            
+                case "4":
+                if (tarefas.length === 0) {
+                    alert("Não há tarefas para concluir.");
+                    break;
+                }
+                let indiceConcluir = prompt("Digite o NÚMERO da tarefa que deseja concluir:");
+                let indexParaConcluir = parseInt(indiceConcluir) - 1;
+                if (!isNaN(indexParaConcluir) && indexParaConcluir >= 0 && indexParaConcluir < tarefas.length) {
+                    tarefas[indexParaConcluir] = `✅ ${tarefas[indexParaConcluir]}`;
+                    alert(`Tarefa "${tarefas[indexParaConcluir]}" marcada como concluída.`);
+                } else {
+                    alert("Índice inválido. Por favor, digite um número válido da lista.");
+                }
+                break;
+            
+                case "5":
+                continuar = false;
+                alert("Saindo do gerenciador de tarefas. Até mais!");
+                break;
+            
+                default:
+                alert("Opção inválida. Por favor, escolha uma das opções de 1 a 5.");
+            }
+        }
+    }
+
+        gerenciadorDeTarefas();
+
+    </script>
+
+</body>
+</html>

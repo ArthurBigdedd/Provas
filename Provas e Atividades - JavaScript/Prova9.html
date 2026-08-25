@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova 9</title>
+</head>
+<body>
+    
+    <script>
+       
+    const aluno = {
+        nome: 'Arthur',
+        idade: 17,
+        notas: [8, 7.5, 9],
+
+        calcularMedia() {
+            const soma = this.notas.reduce((acumulador, nota) => acumulador + nota, 0);
+            return soma / this.notas.length;
+        }
+    };
+
+    const {
+        nome,
+        idade
+    } = aluno;
+
+    const notasComNova = [...aluno.notas, 8.5];
+    aluno.notas = notasComNova;
+
+    function verificarSituacao(media) {
+        return media >= 7 ? 'Aprovado(a)' : 'Reprovado(a)';
+    }
+
+    console.log(`Nome: ${nome}`);
+    console.log(`Idade: ${idade}`);
+
+    console.log('-----');
+
+    console.log('Notas do aluno:');
+    for (const nota of aluno.notas) {
+        console.log(nota);
+    }
+
+    console.log('-----');
+
+    const mediaFinal = aluno.calcularMedia();
+    const situacao = verificarSituacao(mediaFinal);
+
+    console.log(`Média final: ${mediaFinal.toFixed(2)}`);
+    console.log(`Situação: ${situacao}`);
+
+    </script>
+
+</body>
+</html>
